@@ -13,8 +13,8 @@ class Login extends Component {
 
       this.state = {
          userData: {
-            tenDangNhap: '',
-            matKhau: ''
+            username: '',
+            password: ''
          },
          loading: false,
          showAlert: false,
@@ -43,10 +43,10 @@ class Login extends Component {
          const response = await apiPost(url, userData)
 
          if (response && response.status === 200) {
-            const { data } = response.data.result
-            const { tenDangNhap, hash } = data
+            const { data } = response.data//.result
+            const { username, hash } = data
             const localUser = {
-               tenDangNhap,
+               username,
                hash
             }
 
@@ -57,11 +57,13 @@ class Login extends Component {
                history.push('/')
             })
          } else {
+            console.log(response.status);
             showErrorNotification()
             this.setState({ loading: false })
             reset()
          }
       } catch (error) {
+         console.log(error);
          showErrorNotification()
          this.setState({ loading: false })
          reset()
@@ -71,8 +73,8 @@ class Login extends Component {
    reset = () => {
       this.setState({
          userData: {
-            tenDangNhap: '',
-            matKhau: ''
+            username: '',
+            password: ''
          }
       })
    }
@@ -98,42 +100,42 @@ class Login extends Component {
 
    validateFields = () => {
       const { userData } = this.state
-      const { tenDangNhap, matKhau } = userData
+      const { username, password } = userData
       let errors = {}
-      let tenDangNhapErrors = []
-      let matKhauErrors = []
+      let usernameErrors = []
+      let passwordErrors = []
 
-      if (tenDangNhap === '') {
-         tenDangNhapErrors.push(
+      if (username === '') {
+         usernameErrors.push(
             'Tên đăng nhập là thông tin bắt buộc và không được để trống!'
          )
       }
 
-      if (matKhau === '') {
-         matKhauErrors.push(
+      if (password === '') {
+         passwordErrors.push(
             'Mật khẩu là thông tin bắt buộc và không được để trống!'
          )
       }
 
-      if (matKhau.length < 6) {
-         matKhauErrors.push('Mật khẩu phải có ít nhất 6 ký tự!')
+      if (password.length < 6) {
+         passwordErrors.push('Mật khẩu phải có ít nhất 6 ký tự!')
       }
 
-      if (tenDangNhapErrors.length > 0) {
-         errors['tenDangNhap'] = {
+      if (usernameErrors.length > 0) {
+         errors['username'] = {
             name: 'Tên đăng nhập',
-            errors: tenDangNhapErrors
+            errors: usernameErrors
          }
       }
 
-      if (matKhauErrors.length > 0) {
-         errors['matKhau'] = {
+      if (passwordErrors.length > 0) {
+         errors['password'] = {
             name: 'Mật khẩu',
-            errors: matKhauErrors
+            errors: passwordErrors
          }
       }
 
-      return tenDangNhapErrors.length > 0 || matKhauErrors.length > 0
+      return usernameErrors.length > 0 || passwordErrors.length > 0
          ? errors
          : null
    }
@@ -188,12 +190,12 @@ class Login extends Component {
                   type="text"
                   placeholder="Nhập tên đăng nhập của bạn"
                   className={
-                     isValidField('tenDangNhap')
+                     isValidField('username')
                         ? 'form-input-alert'
                         : 'form-input-outline'
                   }
-                  value={userData && userData.tenDangNhap}
-                  onChange={e => changeUserData('tenDangNhap', e.target.value)}
+                  value={userData && userData.username}
+                  onChange={e => changeUserData('username', e.target.value)}
                   onFocus={hideAlert}
                   autoComplete="off"
                />
@@ -205,12 +207,12 @@ class Login extends Component {
                   type="password"
                   placeholder="Nhập mật khẩu của bạn"
                   className={
-                     isValidField('matKhau')
+                     isValidField('password')
                         ? 'form-input-alert'
                         : 'form-input-outline'
                   }
-                  value={userData && userData.matKhau}
-                  onChange={e => changeUserData('matKhau', e.target.value)}
+                  value={userData && userData.password}
+                  onChange={e => changeUserData('password', e.target.value)}
                   onFocus={hideAlert}
                   autoComplete="off"
                />
