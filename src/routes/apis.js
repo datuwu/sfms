@@ -1,4 +1,4 @@
-const baseApi = 'http://localhost:5000/api'
+const baseApi = 'http://localhost:12363/api'
 const baseKhachHangApi = baseApi + '/KhachHang'
 const baseNhanVienApi = baseApi + '/NhanVien'
 const baseNhaCungCapApi = baseApi + '/NhaCungCap'

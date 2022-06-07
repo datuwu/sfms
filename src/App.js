@@ -184,14 +184,15 @@ class App extends Component {
    renderProfileInfo = () => {
       const { user } = this.props
       const { hoVaTen, tenDangNhap, phanQuyen } = user
+      const localUser = JSON.parse(localStorage.getItem('MFFMS_USER'));
       return (
          <Fragment>
             <div>
                <div className="main-header__profile-name">
-                  {hoVaTen || tenDangNhap}
+                  {localUser.name || localUser.username}
                </div>
                <div className="main-header__profile-role">
-                  <i className="fas fa-user-circle"></i> {phanQuyen}
+                  <i className="fas fa-user-circle"></i> {localUser.role}
                </div>
             </div>
          </Fragment>
@@ -251,8 +252,9 @@ class App extends Component {
    renderMenu = () => {
       const { user } = this.props
       const { phanQuyen } = user
+      const localUser = JSON.parse(localStorage.getItem('MFFMS_USER'));
       const sectionsForUser = SECTIONS_FOR_ROLES.find(
-         item => item.role === phanQuyen
+         item => item.role === localUser.role
       )
       const filteredMenu =
          sectionsForUser &&

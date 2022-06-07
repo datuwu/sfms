@@ -44,10 +44,11 @@ class Login extends Component {
 
          if (response && response.status === 200) {
             const { data } = response.data//.result
-            const { username, hash } = data
+            const { username, role, name } = data
             const localUser = {
                username,
-               hash
+               role, 
+               name
             }
 
             showSuccessNotification()
